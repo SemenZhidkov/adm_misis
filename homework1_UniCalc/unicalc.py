@@ -1,9 +1,9 @@
-# Жидков Семён, Ковалёва Мария, Зебелян Артем - БПМ-22-3
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
+
 
 class Calculator(App):
     def build(self):
@@ -11,6 +11,7 @@ class Calculator(App):
         self.operations = ['+', '-', '*', '/']
         self.numbers = [str(i) for i in range(10)]
         self.hex_numbers = ['A', 'B', 'C', 'D', 'E', 'F']
+        self.rim_numbers = ['I', 'V', 'X', 'M']
 
         self.input_text = TextInput(multiline=False, readonly=True, font_size=50)
         buttons = [
@@ -18,8 +19,9 @@ class Calculator(App):
             ['4', '5', '6', '*'],
             ['1', '2', '3', '-'],
             ['Clear', '0', '=', '+'],  # "Clear" для сброса
-            ['A', 'B', 'C', '.'],   # Добавили кнопки для шестнадцатеричных чисел
-            ['D', 'E', 'F', '']
+            ['A', 'B', 'C', '.'],  # Добавили кнопки для шестнадцатеричных чисел
+            ['D', 'E', 'F', ''],
+            ['I', 'V', 'X']
         ]
 
         mode_button = Button(text='Decimal', on_press=self.change_mode)
@@ -50,6 +52,9 @@ class Calculator(App):
         elif self.current_mode == 'octal':
             self.current_mode = 'hexadecimal'
             instance.text = 'Hexadecimal'
+        elif self.current_mode == 'hexadecimal':
+            self.current_mode = 'roman'
+            instance.text = 'Roman'
         else:
             self.current_mode = 'decimal'
             instance.text = 'Decimal'
@@ -89,13 +94,24 @@ class Calculator(App):
         current = self.input_text.text
 
         if instance.text == '=':
-            try:
-                result = self.from_decimal(eval(current))
-                self.input_text.text = result
-            except Exception as e:
-                self.input_text.text = 'Error'
+            if self.current_mode == 'roman':
+                try:
+                    result = self.calculate_roman(current)
+                    self.input_text.text = result
+                except Exception as e:
+                    self.input_text.text = 'Error'
+            else:
+                try:
+                    result = self.from_decimal(eval(current))
+                    self.input_text.text = result
+                except Exception as e:
+                    self.input_text.text = 'Error'
         elif instance.text == 'Clear':  # Обрабатываем сброс текущего значения
             self.input_text.text = ''
+        elif instance.text == '.':
+            if self.current_mode == 'decimal' and current and current[-1].isdigit():
+                    # Разрешаем добавление точки, если режим - десятичный и текущий ввод - число
+                self.input_text.text += instance.text
         elif instance.text == '.':
             if self.current_mode == 'decimal' and current and current[-1].isdigit():
                 # Разрешаем добавление точки, если режим - десятичный и текущий ввод - число
@@ -108,13 +124,81 @@ class Calculator(App):
                             instance.text.isdigit() or instance.text.upper() in self.hex_numbers)) or \
                     instance.text in ['+', '-', '*', '/']:
                 if self.current_mode == 'hexadecimal' and instance.text.upper() in self.hex_numbers:
-                    self.input_text.text += str(self.hex_numbers.index(instance.text.upper()) + 10)
+                    value = self.hex_numbers.index(instance.text.upper()) + 10
+                    self.input_text.text += str(value)
                 else:
                     self.input_text.text += instance.text
+            if (self.current_mode == 'roman' and instance.text in self.rim_numbers):
+                self.input_text.text += instance.text
+
+    def roman_to_int(self, roman_num):
+        roman_dict = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        result = 0
+        prev_value = 0
+
+        for i in range(len(roman_num) - 1, -1, -1):
+            if roman_dict[roman_num[i]] < prev_value:
+                result -= roman_dict[roman_num[i]]
+            else:
+                result += roman_dict[roman_num[i]]
+            prev_value = roman_dict[roman_num[i]]
+        return result
+
+    def int_to_roman(self, num):
+        val = [
+            1000, 900, 500, 400,
+            100, 90, 50, 40,
+            10, 9, 5, 4,
+            1
+        ]
+        syb = [
+            "M", "CM", "D", "CD",
+            "C", "XC", "L", "XL",
+            "X", "IX", "V", "IV",
+            "I"
+        ]
+        roman_num = ''
+        i = 0
+
+        while num > 0:
+            for _ in range(num // val[i]):
+                roman_num += syb[i]
+                num -= val[i]
+            i += 1
+        return roman_num
+
+    def calculate_roman(self, expression):
+        try:
+            operators = ['+', '-', '*', '/']
+            operator = None
+            for op in operators:
+                if op in expression:
+                    operator = op
+                    break
+
+            parts = expression.split(operator)
+            num1 = self.roman_to_int(parts[0].strip())
+            num2 = self.roman_to_int(parts[1].strip())
+
+            if operator == '+':
+                result = num1 + num2
+            elif operator == '-':
+                result = num1 - num2
+            elif operator == '*':
+                result = num1 * num2
+            elif operator == '/':
+                result = num1 // num2
+
+            return self.int_to_roman(result)
+
+        except Exception as e:
+            return 'Error: Invalid expression'
 
 
 if __name__ == '__main__':
     Calculator().run()
+
+
 
 
 
