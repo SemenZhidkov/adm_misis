@@ -18,13 +18,13 @@ class Calculator(App):
             ['4', '5', '6', '*'],
             ['1', '2', '3', '-'],
             ['Clear', '0', '=', '+'],  # "Clear" для сброса
-            ['A', 'B', 'C', ''],   # Добавили кнопки для шестнадцатеричных чисел
+            ['A', 'B', 'C', '.'],   # Добавили кнопки для шестнадцатеричных чисел
             ['D', 'E', 'F', '']
         ]
 
         mode_button = Button(text='Decimal', on_press=self.change_mode)
         mode_button.size_hint = (None, None)
-        mode_button.width = 100
+        mode_button.width = 200
         mode_button.height = 100
 
         layout = BoxLayout(orientation='vertical')
@@ -96,6 +96,10 @@ class Calculator(App):
                 self.input_text.text = 'Error'
         elif instance.text == 'Clear':  # Обрабатываем сброс текущего значения
             self.input_text.text = ''
+        elif instance.text == '.':
+            if self.current_mode == 'decimal' and current and current[-1].isdigit():
+                # Разрешаем добавление точки, если режим - десятичный и текущий ввод - число
+                self.input_text.text += instance.text
         else:
             if (self.current_mode == 'decimal' and instance.text in self.numbers) or \
                     (self.current_mode == 'binary' and instance.text in ['0', '1']) or \
