@@ -17,7 +17,7 @@ class Calculator(App):
             ['7', '8', '9', '/'],
             ['4', '5', '6', '*'],
             ['1', '2', '3', '-'],
-            ['C', '0', '=', '+'],  # Изменили кнопку "." на "C" для сброса
+            ['Clear', '0', '=', '+'],  # "Clear" для сброса
             ['A', 'B', 'C', ''],   # Добавили кнопки для шестнадцатеричных чисел
             ['D', 'E', 'F', '']
         ]
@@ -94,7 +94,7 @@ class Calculator(App):
                 self.input_text.text = result
             except Exception as e:
                 self.input_text.text = 'Error'
-        elif instance.text == 'C':  # Обрабатываем сброс текущего значения
+        elif instance.text == 'Clear':  # Обрабатываем сброс текущего значения
             self.input_text.text = ''
         else:
             if (self.current_mode == 'decimal' and instance.text in self.numbers) or \
