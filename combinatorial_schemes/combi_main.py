@@ -2,9 +2,66 @@
 # Жидков Семён, Зебелян Артем, Левченко Богдан, Ковалева Мария - БПМ-22-3
 
 import math
+import unittest
 
+
+print("Введите цифру от 1 до 8:")
+print("1- для правила суммы")
+print("2- для правила произведения")
+print("3- для размещений с повторениями")
+print("4- для размещений без повторений")
+print("5- для сочетаний с повторениями")
+print("6- для сочетаний без повторений")
+print("7- для перестановок с повторениями")
+print("8- для перестановок без повторений")
+
+# Можественный выбор
+choice = int(input())
+
+if choice == 1: # Правило суммы
+    elements = input("Введите элементы через пробел: ").split(' ')
+    print("Результат работы программы:")
+    sum_rule(elements)
+
+elif choice == 2: #Произведение
+    elements = input("Введите элементы через пробел: ").split(' ')
+    print("Результат работы программы:")
+    direct_product_rule(elements)
+  
+elif choice == 3: #размещения с повторениями 
+    a = input("Введите k, n через пробел: ").split(' ')
+    k, n = a[0], a[1]
+    print(f"Размещения с повторениями - {n ** k}")
+
+elif choice == 4:#размещения без повторений  
+    a = input("Введите k, n через пробел: ").split(' ')
+    k, n = a[0], a[1]
+    print(f"Размещения без повторений - {factorial(n)//(factorial(n-k))}")
+
+elif choice == 5: # Сочетания с повторениями
+    a = input("Введите m, n через пробел: ").split(' ')
+    m, n = a[0], a[1]
+    print("Результат работы программы:")
+    print(combination_with_repetition(m, n))
+
+elif choice == 6:# Сочетания без повторений
+    a = input("Введите k, n через пробел: ").split(' ')
+    k, n = a[0], a[1]
+    print("Результат работы программы:")
+    print(combination_k_of_n(k, n))
+
+elif choice == 7: #перестановки с повторениями
+    elements = input("Введите элементы через пробел: ").split(' ')
+    print(permutation_with_repetition(elements))
+
+elif choice == 8: #перестановки без повторениями
+    elements = input("Введите элементы через пробел: ").split(' ')
+    print("Результат работы программы:")
+    print(permutation_with_repetition(elements))
+
+
+print("ТЕСТЫ: ")
 #перестановки с повторениями
-
 def permutation_with_repetition(multiset):
   sum = 0
   factorial_p = 1
@@ -22,7 +79,6 @@ def permutation_with_repetition(multiset):
 
   
   return int(factorial_p / factorial_q)
-
 # тест:
 A = [2, 1, 1, 2]  
 print("Задача: \n Сколько существует различных перестановок из букв слова «Уссури»?\n Ответ: 180")  
@@ -35,7 +91,6 @@ def permutation_of_n(n):
   for i in range(n):
       factorial_n *= (i + 1)
   return factorial_n
-
 #тест
 n = 8
 print("Задача: \n Сколькими способами можно расположить на шахматной доске 8 ладей, чтобы они «не били» друг друга?\n Ответ: 8! = 40320")  
@@ -54,8 +109,7 @@ def combination_k_of_n(k: int, n: int) -> int:
     
     if i < k:
       factorial_k *= (i + 1) 
-  return int(factorial_n / (factorial_k * factorial_n_k))
-      
+  return int(factorial_n / (factorial_k * factorial_n_k))  
 #тест
 print("Задача: \n В ящике находится 15 деталей. Сколькими способами можно взять 4 детали?\n Ответ: 1365")  
 print("Результат работы программы:")
@@ -73,16 +127,12 @@ def combination_with_repetition(m: int, n: int) -> int:
     
     if i < m:
       factorial_m *= (i + 1) 
-  return int(factorial_n_m_1 / (factorial_n_1 * factorial_m))
-      
+  return int(factorial_n_m_1 / (factorial_n_1 * factorial_m))     
 #тест
 print("Задача: \n В студенческой столовой продают сосиски в тесте, ватрушки и пончики. Сколькими способами можно приобрести пять пирожков?\n Ответ: 21")  
 print("Результат работы программы:")
 print(combination_with_repetition(5, 3))
 print("\nПриятного аппетита!")
-
-
-
 
 # Правило суммы
 def sum_rule(*args):
@@ -96,9 +146,7 @@ def sum_rule(*args):
     int: Сумма отсчетов всех событий.
     """
     return sum(args)
-
-
-# Тестируем функцию различными значениями 
+# Тест
 print(sum_rule(2, 3, 4))  # 2 + 3 + 4 = 9
 print(sum_rule(10, 20, 30, 40))  # 10 + 20 + 30 + 40 = 100
 print(sum_rule(0, 0, 0, 0))  # 0 + 0 + 0 + 0 = 0
@@ -115,14 +163,12 @@ def direct_product_rule(*args):
     int: Результат подсчета всех событий.
     """
     return math.prod(args)
-
-# Test the function with different values
+# Тест
 print(direct_product_rule(2, 3, 4))  # 2 * 3 * 4 = 24
 print(direct_product_rule(10, 20, 30, 40))  # 10 * 20 * 30 * 40 = 240000
 print(direct_product_rule(0, 0, 0, 0))  # 0 * 0 * 0 * 0 = 0
 print(direct_product_rule(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))  # Произведение первых 10 чисел натурального ряда = 3628800
 
-import unittest
 
 def factorial(x: int):
     if x in (0, 1):
@@ -135,19 +181,6 @@ def permutations_with_reps(n: int, m: int):
 
 
 def permutations_without_reps(n: int, m: int):
-    return factorial(n) / factorial(n - m)
-
-def factorial(x: int) -> int:
-    if x in (0, 1):
-        return 1
-    return x * factorial(x - 1)
-    
-
-def permutations_with_reps(n: int, m: int) -> int:
-    return pow(n, m)
-
-
-def permutations_without_reps(n: int, m: int) -> int:
     return factorial(n) / factorial(n - m)
 
 
