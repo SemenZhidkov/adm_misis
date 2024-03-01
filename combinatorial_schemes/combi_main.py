@@ -5,59 +5,8 @@ import math
 import unittest
 
 
-print("Введите цифру от 1 до 8:")
-print("1- для правила суммы")
-print("2- для правила произведения")
-print("3- для размещений с повторениями")
-print("4- для размещений без повторений")
-print("5- для сочетаний с повторениями")
-print("6- для сочетаний без повторений")
-print("7- для перестановок с повторениями")
-print("8- для перестановок без повторений")
 
-# Можественный выбор
-choice = int(input())
 
-if choice == 1: # Правило суммы
-    elements = input("Введите элементы через пробел: ").split(' ')
-    print("Результат работы программы:")
-    sum_rule(elements)
-
-elif choice == 2: #Произведение
-    elements = input("Введите элементы через пробел: ").split(' ')
-    print("Результат работы программы:")
-    direct_product_rule(elements)
-  
-elif choice == 3: #размещения с повторениями 
-    a = input("Введите k, n через пробел: ").split(' ')
-    k, n = a[0], a[1]
-    print(f"Размещения с повторениями - {n ** k}")
-
-elif choice == 4:#размещения без повторений  
-    a = input("Введите k, n через пробел: ").split(' ')
-    k, n = a[0], a[1]
-    print(f"Размещения без повторений - {factorial(n)//(factorial(n-k))}")
-
-elif choice == 5: # Сочетания с повторениями
-    a = input("Введите m, n через пробел: ").split(' ')
-    m, n = a[0], a[1]
-    print("Результат работы программы:")
-    print(combination_with_repetition(m, n))
-
-elif choice == 6:# Сочетания без повторений
-    a = input("Введите k, n через пробел: ").split(' ')
-    k, n = a[0], a[1]
-    print("Результат работы программы:")
-    print(combination_k_of_n(k, n))
-
-elif choice == 7: #перестановки с повторениями
-    elements = input("Введите элементы через пробел: ").split(' ')
-    print(permutation_with_repetition(elements))
-
-elif choice == 8: #перестановки без повторениями
-    elements = input("Введите элементы через пробел: ").split(' ')
-    print("Результат работы программы:")
-    print(permutation_with_repetition(elements))
 
 
 print("ТЕСТЫ: ")
@@ -135,7 +84,7 @@ print(combination_with_repetition(5, 3))
 print("\nПриятного аппетита!")
 
 # Правило суммы
-def sum_rule(*args):
+def sum_rule(args):
     """
     Реализует правило суммы комбинаторики.
     
@@ -147,12 +96,12 @@ def sum_rule(*args):
     """
     return sum(args)
 # Тест
-print(sum_rule(2, 3, 4))  # 2 + 3 + 4 = 9
-print(sum_rule(10, 20, 30, 40))  # 10 + 20 + 30 + 40 = 100
-print(sum_rule(0, 0, 0, 0))  # 0 + 0 + 0 + 0 = 0
-print(sum_rule(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))  # Сумма первых 10 натуральных чисел = 55 
+print(sum_rule([2, 3, 4]))  # 2 + 3 + 4 = 9
+print(sum_rule([10, 20, 30, 40]))  # 10 + 20 + 30 + 40 = 100
+print(sum_rule([0, 0, 0, 0]))  # 0 + 0 + 0 + 0 = 0
+print(sum_rule([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))  # Сумма первых 10 натуральных чисел = 55 
         
-def direct_product_rule(*args):
+def direct_product_rule(args):
     """
     Реализует правило прямого произведения комбинаторики.
     
@@ -164,10 +113,10 @@ def direct_product_rule(*args):
     """
     return math.prod(args)
 # Тест
-print(direct_product_rule(2, 3, 4))  # 2 * 3 * 4 = 24
-print(direct_product_rule(10, 20, 30, 40))  # 10 * 20 * 30 * 40 = 240000
-print(direct_product_rule(0, 0, 0, 0))  # 0 * 0 * 0 * 0 = 0
-print(direct_product_rule(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))  # Произведение первых 10 чисел натурального ряда = 3628800
+print(direct_product_rule([2, 3, 4]))  # 2 * 3 * 4 = 24
+print(direct_product_rule([10, 20, 30, 40]))  # 10 * 20 * 30 * 40 = 240000
+print(direct_product_rule([0, 0, 0, 0]))  # 0 * 0 * 0 * 0 = 0
+print(direct_product_rule([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))  # Произведение первых 10 чисел натурального ряда = 3628800
 
 
 def factorial(x: int):
@@ -208,5 +157,66 @@ class PermutationsTests(unittest.TestCase):
             permutations_without_reps(15, 2), 210
         )
 
-if __name__ == '__main__':
-    unittest.main()
+print()
+print()
+print("Введите цифру от 1 до 8:")
+print("1- для правила суммы")
+print("2- для правила произведения")
+print("3- для размещений с повторениями")
+print("4- для размещений без повторений")
+print("5- для сочетаний с повторениями")
+print("6- для сочетаний без повторений")
+print("7- для перестановок с повторениями")
+print("8- для перестановок без повторений")
+
+# Можественный выбор
+choice = int(input())
+
+if choice == 1: # Правило суммы
+    elements = list(map(int, input("Введите элементы через пробел: ").split(' ')))
+    print("Результат работы программы:")
+    print(sum_rule(elements))
+    input()
+
+elif choice == 2: #Произведение
+    elements = list(map(int, input("Введите элементы через пробел: ").split(' ')))
+    print("Результат работы программы:")
+    print(direct_product_rule(elements))
+    input()
+  
+elif choice == 3: #размещения с повторениями 
+    a = list(map(int, input("Введите k, n через пробел: ").split(' ')))
+    k, n = a[0], a[1]
+    print(f"Размещения с повторениями - {n ** k}")
+    input()
+
+elif choice == 4:#размещения без повторений  
+    a = list(map(int, input("Введите k, n через пробел: ").split(' ')))
+    k, n = a[0], a[1]
+    print(f"Размещения без повторений - {factorial(n)//(factorial(n-k))}")
+    input()
+
+elif choice == 5: # Сочетания с повторениями
+    a = list(map(int, input("Введите m, n через пробел: ").split(' ')))
+    m, n = a[0], a[1]
+    print("Результат работы программы:")
+    print(combination_with_repetition(m, n))
+    input()
+
+elif choice == 6:# Сочетания без повторений
+    a = list(map(int, input("Введите k, n через пробел: ").split(' ')))
+    k, n = a[0], a[1]
+    print("Результат работы программы:")
+    print(combination_k_of_n(k, n))
+    input()
+
+elif choice == 7: #перестановки с повторениями
+    elements = list(map(int, input("Введите k, n через пробел: ").split(' ')))
+    print(permutation_with_repetition(elements))
+    input()
+
+elif choice == 8: #перестановки без повторениями
+    elements = list(map(int, input("Введите k, n через пробел: ").split(' ')))
+    print("Результат работы программы:")
+    print(permutation_with_repetition(elements))
+    input()
