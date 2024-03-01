@@ -4,11 +4,6 @@
 import math
 import unittest
 
-
-
-
-
-
 print("ТЕСТЫ: ")
 #перестановки с повторениями
 def permutation_with_repetition(multiset):
@@ -58,7 +53,8 @@ def combination_k_of_n(k: int, n: int) -> int:
     
     if i < k:
       factorial_k *= (i + 1) 
-  return int(factorial_n / (factorial_k * factorial_n_k))  
+  return int(factorial_n / (factorial_k * factorial_n_k)) 
+  
 #тест
 print("Задача: \n В ящике находится 15 деталей. Сколькими способами можно взять 4 детали?\n Ответ: 1365")  
 print("Результат работы программы:")
@@ -76,7 +72,8 @@ def combination_with_repetition(m: int, n: int) -> int:
     
     if i < m:
       factorial_m *= (i + 1) 
-  return int(factorial_n_m_1 / (factorial_n_1 * factorial_m))     
+  return int(factorial_n_m_1 / (factorial_n_1 * factorial_m))
+  
 #тест
 print("Задача: \n В студенческой столовой продают сосиски в тесте, ватрушки и пончики. Сколькими способами можно приобрести пять пирожков?\n Ответ: 21")  
 print("Результат работы программы:")
@@ -95,6 +92,7 @@ def sum_rule(args):
     int: Сумма отсчетов всех событий.
     """
     return sum(args)
+  
 # Тест
 print(sum_rule([2, 3, 4]))  # 2 + 3 + 4 = 9
 print(sum_rule([10, 20, 30, 40]))  # 10 + 20 + 30 + 40 = 100
@@ -112,6 +110,7 @@ def direct_product_rule(args):
     int: Результат подсчета всех событий.
     """
     return math.prod(args)
+  
 # Тест
 print(direct_product_rule([2, 3, 4]))  # 2 * 3 * 4 = 24
 print(direct_product_rule([10, 20, 30, 40]))  # 10 * 20 * 30 * 40 = 240000
