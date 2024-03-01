@@ -4,7 +4,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 
-
 class Calculator(App):
     def build(self):
         self.current_mode = 'decimal'  # Изначально выбрана десятичная система счисления
