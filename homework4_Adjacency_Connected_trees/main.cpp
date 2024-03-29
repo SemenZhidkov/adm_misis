@@ -93,12 +93,12 @@ public:
 
 int main() {
     // Создание дерева
-    Tree tree(1);
-    tree.addEdge(1, 2);
-    tree.addEdge(1, 3);
-    tree.addEdge(2, 4);
-    tree.addEdge(2, 5);
-    tree.addEdge(3, 6);
+    Tree tree(10);
+    tree.addEdge(10, 20);
+    tree.addEdge(10, 30);
+    tree.addEdge(20, 40);
+    tree.addEdge(20, 50);
+    tree.addEdge(30, 60);
 
     // Вывод дерева в смежном представлении
     tree.printAdjacency();
