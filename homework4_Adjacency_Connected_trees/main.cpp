@@ -1,13 +1,13 @@
+// Жидков С.А., Левченко Б.И., Ковалева Мария, Зебелян Артем 
+
 #include <iostream>
 #include <vector>
 #include <unordered_set>
 
-using namespace std;
-
 // Структура для представления узла дерева
 struct TreeNode {
     int data;
-    vector<TreeNode*> children;
+    std::vector<TreeNode*> children;
 
     TreeNode(int val) : data(val) {}
 };
@@ -29,7 +29,7 @@ public:
             TreeNode* childNode = new TreeNode(childVal);
             parentNode->children.push_back(childNode);
         } else {
-            cout << "Родительский узел не найден." << endl;
+            std::cout << "Родительский узел не найден." << std::endl;
         }
     }
 
@@ -48,45 +48,46 @@ public:
 
     // Функция для вывода дерева в смежном представлении
     void printAdjacency() {
-        cout << "Смежное представление дерева:" << endl;
+        std::cout << "Смежное представление дерева:" << std::endl;
         printAdjacencyUtil(root);
     }
 
     // Функция для вывода дерева в связном представлении
     void printConnected() {
-        cout << "Связное представление дерева:" << endl;
-        unordered_set<int> visited;
+        std::cout << "Связное представление дерева:" << std::endl;
+        std::unordered_set<int> visited;
         printConnectedUtil(root, visited);
     }
 
-    // Вспомогательная функция для вывода смежного представления дерева (рекурсивная)
+    // Функция для вывода смежного представления дерева (рекурсивная)
     void printAdjacencyUtil(TreeNode* node) {
         if (node == nullptr) return;
 
-        cout << node->data << ": ";
+        std::cout << node->data << ": ";
         for (TreeNode* child : node->children) {
-            cout << child->data << " ";
+            std::cout << child->data << " ";
         }
-        cout << endl;
+        std::cout << std::endl;
 
         for (TreeNode* child : node->children) {
             printAdjacencyUtil(child);
         }
     }
 
-     void printConnectedUtil(TreeNode* node, unordered_set<int>& visited) {
+    // Функция для вывода связного представления дерева
+     void printConnectedUtil(TreeNode* node, std::unordered_set<int>& visited) {
         if (node == nullptr) return;
 
         visited.insert(node->data);
 
-        cout << node->data << ": ";
+        std::cout << node->data << ": ";
         for (TreeNode* child : node->children) {
-            cout << child->data << " ";
+            std::cout << child->data << " ";
             if (visited.find(child->data) == visited.end()) {
                 printConnectedUtil(child, visited);
             }
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 };
 
